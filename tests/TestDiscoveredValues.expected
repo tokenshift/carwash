@@ -14,7 +14,7 @@ PASSWORD => '********'
 "PASSWORD" => "********"
 "PASSWORD" => "********"
 'PASSWORD' => '********'
-This is a log line: { :some_password => "********", :another_password => "********", :something_else   => "********" }
+This is a log line: { :some_password => "********", :another_password => "********", :something_else => "testing3" }
 password=********
 PaSsWoRd=********
 ******** ******** ******** ********

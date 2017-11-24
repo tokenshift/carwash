@@ -38,7 +38,6 @@ func (ks keyScanner) Each(f func(string), input string) {
 	for _, pattern := range ks.patterns {
 		matches := pattern.FindAllStringSubmatch(input, -1)
 		for _, match := range matches {
-			fmt.Printf("%s: %#v\n", input, match[1])
 			f(match[1])
 		}
 	}

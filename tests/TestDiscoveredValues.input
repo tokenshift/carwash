@@ -1,6 +1,6 @@
 PASSWORD=super_secret
 PASSWORD = also_secret
-PASSWORD='testing'
+PASSWORD='testpass'
 PASSWORD="whatever"
 PASSWORD my_voice_is_my
 PASSWORD "sensitive"
@@ -14,7 +14,7 @@ PASSWORD => 'Ok, fine.'
 "PASSWORD" => "I'll quote the key too."
 "PASSWORD" => "But you can't handle \"this\"!"
 'PASSWORD' => 'Or \'this\'.'
-This is a log line: { :some_password => "testing1", :another_password => "testing2", :something_else   => "testing3" }
+This is a log line: { :some_password => "testing1", :another_password => "testing2", :something_else => "testing3" }
 password=methusaleh
 PaSsWoRd=helasuthem
 super_secret SUPER_secret methusaleh helasuthem

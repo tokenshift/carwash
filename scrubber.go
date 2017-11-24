@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -17,14 +18,14 @@ type Scrubber interface {
 func NewScrubber(mask string) Scrubber {
 	return &scrubber{
 		scanners: make([]Scanner, 0),
-		vals:     NewStringSet(),
+		vals:     make([]string, 0, 1024),
 		mask:     mask,
 	}
 }
 
 type scrubber struct {
 	scanners []Scanner
-	vals     StringSet
+	vals     []string
 	mask     string
 }
 
@@ -33,7 +34,24 @@ func (s *scrubber) AddSensitiveKey(key string) {
 }
 
 func (s *scrubber) AddSensitiveValue(val string) {
-	s.vals.Add(strings.ToLower(val))
+	s.vals = append(s.vals, strings.ToLower(val))
+	// Strings are sorted by length so that the longest matches are obscured first.
+	sort.Sort(ByLongest(s.vals))
+	// TODO: Move this into a value matcher class; make sure strings aren't added redundantly.
+}
+
+type ByLongest []string
+
+func (ss ByLongest) Less(i, j int) bool {
+	return len(ss[i]) > len(ss[j])
+}
+
+func (ss ByLongest) Len() int {
+	return len(ss)
+}
+
+func (ss ByLongest) Swap(i, j int) {
+	ss[i], ss[j] = ss[j], ss[i]
 }
 
 func (s *scrubber) Scrub(input string) string {
@@ -50,9 +68,9 @@ func (s *scrubber) Discover(input string) {
 }
 
 func (s *scrubber) Obscure(input string) string {
-	s.vals.Each(func(val string) {
+	for _, val := range s.vals {
 		input = maskLine(input, val, s.mask)
-	})
+	}
 
 	return input
 }
