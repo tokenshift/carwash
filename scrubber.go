@@ -30,6 +30,7 @@ type scrubber struct {
 }
 
 func (s *scrubber) AddSensitiveKey(key string) {
+	// TODO: Don't add the same key multiple times.
 	s.scanners = append(s.scanners, NewKeyScanner(key))
 }
 

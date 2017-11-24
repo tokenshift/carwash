@@ -22,4 +22,5 @@ ENV password ********
 ENV password=********
 ********
 ********
-
+Lastpass generated password: ******** should be obscured
+As should this password: "********"

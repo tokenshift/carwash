@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"regexp"
+	"strings"
 )
 
 type Scanner interface {
@@ -10,8 +11,8 @@ type Scanner interface {
 }
 
 type keyScanner struct {
-	key      string
-	patterns []*regexp.Regexp
+	key     string
+	pattern *regexp.Regexp
 }
 
 // Looks for the following patterns of key-value pairs:
@@ -21,27 +22,63 @@ type keyScanner struct {
 // * KEY => value
 // Where the key or value may be single or double quoted.
 func NewKeyScanner(key string) Scanner {
-	escapedKey := regexp.QuoteMeta(key)
-	patterns := []*regexp.Regexp{
-		regexp.MustCompile(fmt.Sprintf(`(?i)%s['"]?\s*(?:=>|=|:|\s+)\s*'((?:\\'|[^'])+)'`, escapedKey)),
-		regexp.MustCompile(fmt.Sprintf(`(?i)%s['"]?\s*(?:=>|=|:|\s+)\s*"((?:\\"|[^"])+)"`, escapedKey)),
-		regexp.MustCompile(fmt.Sprintf(`(?i)%s['"]?\s*(?:=>|=|:)\s*((?:\\\s|\\"|\\'|[^\s'"\|>])+)`, escapedKey)),
-	}
+	lowerKey := strings.ToLower(key)
+	escapedKey := regexp.QuoteMeta(lowerKey)
+
+	pattern := regexp.MustCompile(fmt.Sprintf(`(?i)%s['"]?\s*(?:=>|=|:|\s+)\s*("(?:\\"|[^"])+"|'(?:\\'|[^'])+'|(?:\\\s|\\"|\\'|[^\s'"])+)`, escapedKey))
 
 	return keyScanner{
-		key:      key,
-		patterns: patterns,
+		key:     lowerKey,
+		pattern: pattern,
 	}
 }
 
 func (ks keyScanner) Each(f func(string), input string) {
-	for _, pattern := range ks.patterns {
-		matches := pattern.FindAllStringSubmatch(input, -1)
-		for _, match := range matches {
-			f(match[1])
+	matches := ks.pattern.FindAllStringSubmatch(input, -1)
+	for _, match := range matches {
+		value := stripQuotes(match[1])
+		f(value)
+
+		unescaped := unescape(value)
+		if unescaped != value {
+			f(unescaped)
 		}
 	}
 }
 
-// func (ks keyScanner) unescape(val string) string {
-// }
+func stripQuotes(val string) string {
+	if strings.HasPrefix(val, "\"") && strings.HasSuffix(val, "\"") {
+		return val[1 : len(val)-1]
+	} else if strings.HasPrefix(val, "'") && strings.HasSuffix(val, "'") {
+		return val[1 : len(val)-1]
+	} else {
+		return val
+	}
+}
+
+var rxEscapeChar = regexp.MustCompile(`\\(.)`)
+
+func unescape(val string) string {
+	return rxEscapeChar.ReplaceAllStringFunc(val, func(match string) string {
+		switch match {
+		case "\\0":
+			return string([]byte{0})
+		case "\\a":
+			return "\a"
+		case "\\b":
+			return "\b"
+		case "\\f":
+			return "\f"
+		case "\\n":
+			return "\n"
+		case "\\r":
+			return "\r"
+		case "\\t":
+			return "\t"
+		case "\\v":
+			return "\v"
+		default:
+			return match[1:]
+		}
+	})
+}

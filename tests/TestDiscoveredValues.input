@@ -22,3 +22,5 @@ ENV password scherzo_in_e_minor
 ENV password=annella_perfume
 But you can't handle "this"!
 Or 'this'.
+Lastpass generated password: A!J@f#s$m%C^I&U*P(N)l>3<L|J>>3W&bfCqD should be obscured
+As should this password: "A!J@f#s  $m%C^I&U*P(N)l  >3<L|J>>3  W&bfCqD"
