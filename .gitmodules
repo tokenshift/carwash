@@ -1,0 +1,3 @@
+[submodule "vendor/alecthomas/kingpin"]
+	path = vendor/alecthomas/kingpin
+	url = https://github.com/alecthomas/kingpin.git

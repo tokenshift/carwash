@@ -1,0 +1,25 @@
+PASSWORD=********
+PASSWORD = ********
+PASSWORD='********'
+PASSWORD="********"
+PASSWORD ********
+PASSWORD "********"
+PASSWORD '********'
+PASSWORD: ********
+PASSWORD: '********'
+PASSWORD: "********"
+PASSWORD => ********
+PASSWORD => "********"
+PASSWORD => '********'
+"PASSWORD" => "********"
+"PASSWORD" => "********"
+'PASSWORD' => '********'
+This is a log line: { :some_password => "********", :another_password => "********", :something_else   => "********" }
+password=********
+PaSsWoRd=********
+******** ******** ******** ********
+ENV password ********
+ENV password=********
+********
+********
+

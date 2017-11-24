@@ -1,0 +1,24 @@
+PASSWORD=super_secret
+PASSWORD = also_secret
+PASSWORD='testing'
+PASSWORD="whatever"
+PASSWORD my_voice_is_my
+PASSWORD "sensitive"
+PASSWORD 'alsosensitive'
+PASSWORD: wordpass
+PASSWORD: 'w0rdp4ss'
+PASSWORD: "w0rdp3rf3ct"
+PASSWORD => ruby_code
+PASSWORD => "No, really!"
+PASSWORD => 'Ok, fine.'
+"PASSWORD" => "I'll quote the key too."
+"PASSWORD" => "But you can't handle \"this\"!"
+'PASSWORD' => 'Or \'this\'.'
+This is a log line: { :some_password => "testing1", :another_password => "testing2", :something_else   => "testing3" }
+password=methusaleh
+PaSsWoRd=helasuthem
+super_secret SUPER_secret methusaleh helasuthem
+ENV password scherzo_in_e_minor
+ENV password=annella_perfume
+But you can't handle "this"!
+Or 'this'.
