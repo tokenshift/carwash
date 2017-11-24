@@ -38,6 +38,7 @@ func testSingleExample(t *T, name string) {
 	defer expected.Close()
 
 	scrubber := NewScrubber("********")
+	addPredefinedKeys(scrubber)
 
 	if _, err := os.Stat(fmt.Sprintf("%s.vals", name)); err == nil {
 		loadValsFile(fmt.Sprintf("%s.vals", name), scrubber)
@@ -48,6 +49,7 @@ func testSingleExample(t *T, name string) {
 
 	inScanner := bufio.NewScanner(input)
 	outScanner := bufio.NewScanner(expected)
+	line := 0
 
 	for inScanner.Scan() {
 		if !outScanner.Scan() {
@@ -55,9 +57,14 @@ func testSingleExample(t *T, name string) {
 			return
 		}
 
+		line += 1
+
 		scrubbed := scrubber.Scrub(inScanner.Text())
 		if scrubbed != outScanner.Text() {
-			t.Errorf("%s\nExpected: %s\nActual:   %s", name, outScanner.Text(), scrubbed)
+			t.Errorf("%s:%d\nExpected: %s\nActual:   %s",
+				name, line,
+				outScanner.Text(),
+				scrubbed)
 		}
 	}
 

@@ -29,7 +29,7 @@ type scrubber struct {
 }
 
 func (s *scrubber) AddSensitiveKey(key string) {
-	// s.scanners = append(s.scanners, NewKeyScanner(key))
+	s.scanners = append(s.scanners, NewKeyScanner(key))
 }
 
 func (s *scrubber) AddSensitiveValue(val string) {
