@@ -22,13 +22,12 @@ type keyScanner struct {
 // * KEY => value
 // Where the key or value may be single or double quoted.
 func NewKeyScanner(key string) Scanner {
-	lowerKey := strings.ToLower(key)
-	escapedKey := regexp.QuoteMeta(lowerKey)
+	escapedKey := regexp.QuoteMeta(key)
 
 	pattern := regexp.MustCompile(fmt.Sprintf(`(?i)%s['"]?\s*(?:=>|=|:|\s+)\s*("(?:\\"|[^"])+"|'(?:\\'|[^'])+'|(?:\\\s|\\"|\\'|[^\s'"])+)`, escapedKey))
 
 	return keyScanner{
-		key:     lowerKey,
+		key:     key,
 		pattern: pattern,
 	}
 }

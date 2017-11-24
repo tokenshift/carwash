@@ -17,7 +17,8 @@ type Scrubber interface {
 
 func NewScrubber(mask string) Scrubber {
 	return &scrubber{
-		scanners: make([]Scanner, 0),
+		scanners: make([]Scanner, 0, 64),
+		keys:     NewStringSet(),
 		vals:     make([]string, 0, 1024),
 		mask:     mask,
 	}
@@ -25,13 +26,16 @@ func NewScrubber(mask string) Scrubber {
 
 type scrubber struct {
 	scanners []Scanner
+	keys     StringSet
 	vals     []string
 	mask     string
 }
 
 func (s *scrubber) AddSensitiveKey(key string) {
-	// TODO: Don't add the same key multiple times.
-	s.scanners = append(s.scanners, NewKeyScanner(key))
+	lower := strings.ToLower(key)
+	if s.keys.Add(lower) {
+		s.scanners = append(s.scanners, NewKeyScanner(lower))
+	}
 }
 
 func (s *scrubber) AddSensitiveValue(val string) {
