@@ -80,7 +80,7 @@ func (s *scrubber) Obscure(input string) string {
 	return input
 }
 
-// TODO: Turn the list of sensitive values into a regex, so this doesn't require
+// TODO: Turn the list of sensitive values into a trie, so this doesn't require
 // a bunch of iterations over the input string.
 func maskLine(input, match, mask string) string {
 	inputLower := strings.ToLower(input)
