@@ -11,13 +11,22 @@ import (
 )
 
 func TestAllExamples(t *T) {
+	for _, testname := range exampleNames() {
+		testSingleExample(t, testname)
+	}
+}
+
+func exampleNames() []string {
 	files, err := filepath.Glob("./tests/*.input")
 	checkFatal(err)
 
+	names := make([]string, 0, len(files))
 	for _, filename := range files {
 		testname := strings.TrimSuffix(filename, filepath.Ext(filename))
-		testSingleExample(t, testname)
+		names = append(names, testname)
 	}
+
+	return names
 }
 
 func testSingleExample(t *T, name string) {
