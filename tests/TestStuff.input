@@ -1,0 +1,14 @@
+This is a test.
+Config:
+PASSWORD=GABBAgabbaHey
+DATABASE_URL=postgres://DbUser:DbPassword@DbHost:5432/Testing
+Doing some more stuff
+Just make sure nobody knows the gabbagabbahey password!
+Or the DBPASSWORD. That would be bad.
+ENV password rocketx
+ENV password=bigred
+ENV password=flash
+	secret_key=another_thing
+	api_token=dontsharethis
+	other_config=not-secret
+{"stream":"ENV MY_PASSWORD some_secret_thing\n"}

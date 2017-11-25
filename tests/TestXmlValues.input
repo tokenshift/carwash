@@ -1,0 +1,6 @@
+<password>secret password</password>
+This is the secret password.
+<password><![CDATA[pa[ss<>wo]rd]]></password>
+Also a pa[ss<>w]rd].
+<password>&lt;password&gt;</password>
+The final "<password>".

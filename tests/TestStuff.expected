@@ -1,0 +1,14 @@
+This is a test.
+Config:
+PASSWORD=********
+DATABASE_URL=postgres://DbUser:********@DbHost:5432/Testing
+Doing some more stuff
+Just make sure nobody knows the ******** password!
+Or the ********. That would be bad.
+ENV password ********
+ENV password=********
+ENV password=********
+	secret_key=********
+	api_token=********
+	other_config=not-secret
+{"stream":"ENV MY_PASSWORD ********\n"}
